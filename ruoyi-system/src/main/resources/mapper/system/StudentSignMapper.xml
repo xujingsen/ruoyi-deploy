@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.StudentSignMapper">
+    
+    <resultMap type="StudentSign" id="StudentSignResult">
+        <result property="id"    column="id"    />
+        <result property="stuNum"    column="stu_num"    />
+        <result property="grade"    column="grade"    />
+        <result property="name"    column="name"    />
+        <result property="classDate"    column="class_date"    />
+        <result property="classTime"    column="class_time"    />
+        <result property="actualTime"    column="actual_time"    />
+        <result property="lateMinute"    column="late_minute"    />
+        <result property="lateLevel"    column="late_level"    />
+        <result property="course"    column="course"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectStudentSignVo">
+        select id, stu_num, grade, name, class_date, class_time, actual_time, late_minute, late_level, course, created_by, create_time, update_by, update_time, remark from student_sign
+    </sql>
+
+    <select id="selectStudentSignList" parameterType="StudentSign" resultMap="StudentSignResult">
+        <include refid="selectStudentSignVo"/>
+        <where>  
+            <if test="stuNum != null "> and stu_num = #{stuNum}</if>
+            <if test="grade != null "> and grade = #{grade}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="classDate != null "> and class_date = #{classDate}</if>
+            <if test="classTime != null "> and class_time = #{classTime}</if>
+            <if test="actualTime != null "> and actual_time = #{actualTime}</if>
+            <if test="lateMinute != null "> and late_minute = #{lateMinute}</if>
+            <if test="lateLevel != null  and lateLevel != ''"> and late_level = #{lateLevel}</if>
+            <if test="course != null  and course != ''"> and course = #{course}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudentSignById" parameterType="Long" resultMap="StudentSignResult">
+        <include refid="selectStudentSignVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStudentSign" parameterType="StudentSign" useGeneratedKeys="true" keyProperty="id">
+        insert into student_sign
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stuNum != null">stu_num,</if>
+            <if test="grade != null">grade,</if>
+            <if test="name != null">name,</if>
+            <if test="classDate != null">class_date,</if>
+            <if test="classTime != null">class_time,</if>
+            <if test="actualTime != null">actual_time,</if>
+            <if test="lateMinute != null">late_minute,</if>
+            <if test="lateLevel != null">late_level,</if>
+            <if test="course != null">course,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stuNum != null">#{stuNum},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="name != null">#{name},</if>
+            <if test="classDate != null">#{classDate},</if>
+            <if test="classTime != null">#{classTime},</if>
+            <if test="actualTime != null">#{actualTime},</if>
+            <if test="lateMinute != null">#{lateMinute},</if>
+            <if test="lateLevel != null">#{lateLevel},</if>
+            <if test="course != null">#{course},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudentSign" parameterType="StudentSign">
+        update student_sign
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stuNum != null">stu_num = #{stuNum},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="classDate != null">class_date = #{classDate},</if>
+            <if test="classTime != null">class_time = #{classTime},</if>
+            <if test="actualTime != null">actual_time = #{actualTime},</if>
+            <if test="lateMinute != null">late_minute = #{lateMinute},</if>
+            <if test="lateLevel != null">late_level = #{lateLevel},</if>
+            <if test="course != null">course = #{course},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudentSignById" parameterType="Long">
+        delete from student_sign where id = #{id}
+    </delete>
+
+    <delete id="deleteStudentSignByIds" parameterType="String">
+        delete from student_sign where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
