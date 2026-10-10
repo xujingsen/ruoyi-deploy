@@ -57,6 +57,6 @@ jobs:
             fi
             # 启动新进程
             nohup java -jar ruoyi-admin.jar > ruoyi.log 2>&1 &
-            sleep 5
+            sleep 40
             echo "部署完成，当前进程："
-            ps -ef | grep ruoyi-admin.jar | grep -v grep
+            ps -ef | grep ruoyi-admin.jar | grep -v grep || true
